@@ -1,6 +1,5 @@
-import { createRef, useEffect, useState } from "react";
 import axios from "axios";
-import FormData from "form-data";
+import { createRef, useState } from "react";
 // import fs from "fs";
 
 const Background = () => {
@@ -10,39 +9,6 @@ const Background = () => {
   const [backgroundColor, setBackgroundColor] = useState<string | null>(null);
   const [binaryString, setBinaryString] = useState<string>("");
   const [imageType, setImageType] = useState<string>("");
-
-  const removeBackground = async () => {
-    const formData = new FormData();
-    formData.append("size", "auto");
-    formData.append("image_file_b64", binaryString);
-
-    try {
-      const response = await axios.post(
-        "https://api.remove.bg/v1.0/removebg",
-        formData,
-        {
-          responseType: "arraybuffer",
-          headers: {
-            "Content-Type": "multipart/form-data",
-            "X-Api-Key": "BhLuZysJvVLEUct1Bpy7knnp",
-          },
-        }
-      );
-
-      if (response.status !== 200) {
-        console.error("Error:", response.status, response.statusText);
-        return;
-      }
-
-      console.log("responseImage", response.data);
-      const base64String = arrayBufferToBase64(response.data);
-      console.log("base64String", base64String);
-      // setImage(response.data);
-      setImage(imageType + "," + base64String);
-    } catch (error) {
-      console.error("Request failed:", error);
-    }
-  };
 
   const removeBackground1 = async () => {
     let payload = {
